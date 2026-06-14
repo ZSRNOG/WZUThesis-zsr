@@ -285,10 +285,16 @@
   \renewcommand{\headrulewidth}{0pt}%
 }
 
-\renewcommand{\chaptermark}[1]{\markboth{第\arabic{chapter}章\quad #1}{}}
+\makeatletter
+\renewcommand{\chaptermark}[1]{%
+  \if@mainmatter
+    \markboth{第\arabic{chapter}章\quad #1}{}%
+  \else
+    \markboth{#1}{#1}%
+  \fi
+}
 \renewcommand{\sectionmark}[1]{}
 
-\makeatletter
 \renewcommand{\cleardoublepage}[1][plain]{%
   \clearpage\if@twoside\ifodd\c@page\else
     \thispagestyle{#1}\hbox{}\newpage
@@ -546,8 +552,10 @@
 \newcommand{\makewzubibliography}{%
   \cleardoublepage
   \phantomsection
+  \markboth{\bibname}{\bibname}%
   \addcontentsline{toc}{chapter}{\bibname}
   \printbibliography[title=\bibname]
+  \markboth{\bibname}{\bibname}%
 }
 
 \newcommand{\Vector}[1]{\bm{#1}}
