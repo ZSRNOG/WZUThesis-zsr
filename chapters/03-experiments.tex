@@ -1,0 +1,94 @@
+\chapter{图表、颜色和扩展包}
+
+本章展示如何插入图片、表格、双语标题、自定义颜色以及额外宏包。图表标题默认居中，图形列表和表格列表中每个条目会显示中文一行、英文一行。
+
+\section{插入图片}
+
+图片文件建议放在 \texttt{figures/} 目录中。模板提供 \verb|\wzubicaption| 生成中英文双语标题，并同时写入图形列表。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.72\textwidth]{figures/demo-workflow.png}
+  \wzubicaption{模板工作流程示意图}{Workflow of the thesis template.}
+  \label{fig:workflow}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.62\textwidth]{figures/demo-data.png}
+  \wzubicaption{数据准备示意图}{Example image for data preparation.}
+  \label{fig:data}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.62\textwidth]{figures/demo-result.png}
+  \wzubicaption{结果展示示意图}{Example image for result presentation.}
+  \label{fig:result}
+\end{figure}
+
+\section{插入表格}
+
+表格推荐使用 \texttt{booktabs} 的 \verb|\toprule|、\verb|\midrule| 和 \verb|\bottomrule|，这样线条更清爽。表格标题同样使用 \verb|\wzubicaption|。
+
+\begin{table}[htbp]
+  \centering
+  \wzubicaption{封面字段说明}{Metadata fields used on the cover page.}
+  \label{tab:metadata-fields}
+  \begin{tabular}{lll}
+    \toprule
+    字段 & 文件位置 & 用途 \\
+    \midrule
+    \texttt{title} & \texttt{front/metadata.tex} & 中文题目和中文摘要页题目 \\
+    \texttt{title*} & \texttt{front/metadata.tex} & 英文摘要页题目 \\
+    \texttt{author} & \texttt{front/metadata.tex} & 封面作者姓名 \\
+    \texttt{advisor} & \texttt{front/metadata.tex} & 封面指导教师 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+  \centering
+  \wzubicaption{常用目录说明}{Common directories in this template.}
+  \label{tab:directories}
+  \begin{tabular}{ll}
+    \toprule
+    目录 & 说明 \\
+    \midrule
+    \texttt{front/} & 元数据、摘要等前置内容 \\
+    \texttt{chapters/} & 正文章节 \\
+    \texttt{back/} & 致谢、成果、附录等后置内容 \\
+    \texttt{figures/} & 图片文件 \\
+    \texttt{bib/} & BibTeX 参考文献数据库 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{加入额外宏包}
+
+额外宏包建议放在 \texttt{thesis.tex} 的导言区，也就是文档类声明之后、正文开始之前。例如：
+
+\begin{lstlisting}[language=TeX]
+\usepackage{mhchem}      % 化学式
+\usepackage{tikz}        % 绘图
+\usepackage{pgfplots}    % 坐标图
+\end{lstlisting}
+
+如果某个宏包会影响全局格式，例如标题、目录、页眉页脚、图表标题，应优先检查它是否与模板类文件已有设置冲突。
+
+\section{自定义颜色}
+
+模板已经加载 \texttt{xcolor}，可以在导言区定义颜色：
+
+\begin{lstlisting}[language=TeX]
+\definecolor{wzublue}{RGB}{30,86,160}
+\definecolor{wzugreen}{RGB}{49,126,82}
+\end{lstlisting}
+
+正文中可以这样使用：
+
+\begin{lstlisting}[language=TeX]
+{\color{wzublue} 这是一段蓝色文字。}
+\end{lstlisting}
+
+正式论文中不建议大量使用彩色正文。颜色更适合图表、算法流程图和必要的强调。

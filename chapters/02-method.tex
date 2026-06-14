@@ -1,0 +1,85 @@
+\chapter{正文写作方法}
+
+本章展示论文正文中最常用的结构、交叉引用、公式、列表和参考文献写法。建议正文只保留内容命令，把版式命令集中放在类文件或少量自定义宏中。
+
+\section{章节层级}
+
+正文使用 \verb|\chapter|、\verb|\section|、\verb|\subsection| 和 \verb|\subsubsection| 组织。模板当前编号为“第1章”、节号为“1.1”，图、表和公式按“章-序号”编号。
+
+\begin{lstlisting}[language=TeX]
+\chapter{绪论}
+\section{研究背景}
+\subsection{国内外研究现状}
+\end{lstlisting}
+
+如果需要调整目录深度，可以修改 \texttt{wzu-thesis.cls} 中的设置：
+
+\begin{lstlisting}[language=TeX]
+\setcounter{tocdepth}{2}
+\end{lstlisting}
+
+如果只是某个小标题不想进入目录，可以使用带星号的标题命令：
+
+\begin{lstlisting}[language=TeX]
+\section*{不进目录的标题}
+\end{lstlisting}
+
+\section{交叉引用}
+
+模板已经加载 \texttt{cleveref}，推荐使用 \verb|\cref| 自动生成引用名称。写作时先给图、表、公式设置 \verb|\label|，再在正文中引用这些标签。
+
+\begin{lstlisting}[language=TeX]
+如 \cref{fig:workflow} 所示，模板把内容与格式分离。
+\end{lstlisting}
+
+\section{数学公式}
+
+行内公式可写作 \(a^2+b^2=c^2\)。独立公式建议使用 \texttt{equation} 环境并添加标签：
+
+\begin{equation}
+  \mathcal{L}(\theta)=\frac{1}{N}\sum_{i=1}^{N}\left\lVert f_{\theta}(x_i)-y_i\right\rVert_2^2 .
+  \label{eq:sample-loss}
+\end{equation}
+
+正式论文中，公式前后应有必要解释，不建议连续堆叠公式。
+
+\section{参考文献}
+
+参考文献条目写在 \texttt{bib/references.bib} 中，正文用 \verb|\cite| 引用。例如，本模板参考了 \LaTeX{} 的基本写作思想\cite{lamport1986latex}，参考文献格式采用 GB/T 7714 风格\cite{gbt7714-2015}。模板通过 \texttt{biblatex-gb7714-2015} 自动处理顺序编码、作者名、出版项和标点，日常写作只需要维护 BibTeX 条目。
+
+\begin{lstlisting}[language=TeX]
+参考文献可这样引用：\cite{lamport1986latex}
+多篇文献可这样引用：\cite{lamport1986latex,gbt7714-2015}
+\end{lstlisting}
+
+常见国标参考文献条目写法如下：
+
+\begin{lstlisting}[language=TeX]
+@article{demo2026,
+  author  = {王一帆 and 赵明},
+  title   = {应用统计模型的稳健估计方法},
+  journal = {统计研究},
+  year    = {2026},
+  volume  = {43},
+  number  = {6},
+  pages   = {1-12}
+}
+
+@standard{gbt7714-2015,
+  title       = {信息与文献 参考文献著录规则},
+  number      = {GB/T 7714--2015},
+  institution = {中国国家标准化管理委员会},
+  address     = {北京},
+  year        = {2015}
+}
+\end{lstlisting}
+
+\section{列表}
+
+有序列表和无序列表使用标准环境即可：
+
+\begin{enumerate}
+  \item 先修改 \texttt{front/metadata.tex} 中的论文信息。
+  \item 再修改 \texttt{front/abstract.tex} 中的摘要。
+  \item 最后在 \texttt{chapters/} 中撰写正文。
+\end{enumerate}

@@ -1,0 +1,58 @@
+\chapter{模板快速开始}
+
+本章说明如何使用本模板完成一篇温州大学硕士学位论文。模板联系邮箱为
+\href{mailto:zsrnog@yeah.net}{zsrnog@yeah.net}。模板的目标是把封面、声明页、摘要、目录、图表目录、正文、参考文献和后置材料拆分到固定位置，让日常写作尽量只修改内容文件。
+
+\section{文件结构}
+
+主入口是 \texttt{thesis.tex}。通常只需要在这个文件里调整章节顺序、是否启用图形列表和表格列表，以及是否加入附录。模板类文件是 \texttt{wzu-thesis.cls}，它集中管理页边距、字体、页眉页脚、目录、封面和图表标题格式。
+
+论文信息放在 \texttt{front/metadata.tex}。中英文摘要放在 \texttt{front/abstract.tex}。正文放在 \texttt{chapters/} 目录中，后置材料放在 \texttt{back/} 目录中，参考文献数据库放在 \texttt{bib/references.bib}。
+
+\section{修改首页信息}
+
+封面上的分类号、UDC、学号、密级、题目、作者、培养类型、学位类型、专业名称、研究方向、指导教师和完成日期都在 \texttt{front/metadata.tex} 中修改。例如：
+
+\begin{lstlisting}[language=TeX]
+\wzusetup{
+  classification = {TP391},
+  udc = {004},
+  student-id = {2024000000},
+  secret-level = {公开},
+  title = {基于贝叶斯层级模型的城市居民消费结构统计分析},
+  title* = {Statistical Analysis of Urban Household Consumption Structure Based on Bayesian Hierarchical Models},
+  author = {王一帆},
+  training-type = {全日制专业学位硕士},
+  degree-type = {专业型},
+  major = {应用统计},
+  research-field = {经济统计与数据分析},
+  advisor = {赵明（副教授）},
+  completion-date = {2026 年 6 月}
+}
+\end{lstlisting}
+
+其中 \texttt{title} 会同时用于封面和中文摘要页，\texttt{title*} 会用于英文摘要页。封面格式本身由 \verb|\makewzucover| 生成，日常写作不建议直接修改类文件中的封面坐标。
+
+\section{编译方式}
+
+推荐使用 \texttt{latexmk} 自动完成多轮 XeLaTeX、Biber 和 PDF 生成：
+
+\begin{lstlisting}[language=bash]
+latexmk -xelatex thesis.tex
+\end{lstlisting}
+
+编译后的 PDF 位于 \texttt{thesis.pdf}。如果只想清理辅助文件，可以使用 \texttt{latexmk -c}。
+
+\section{盲审和打印}
+
+盲审版可以在 \texttt{thesis.tex} 的文档类选项中加入 \texttt{anonymous}：
+
+\begin{lstlisting}[language=TeX]
+\documentclass[twoside,anonymous]{wzu-thesis}
+\end{lstlisting}
+
+打印版可以使用 \texttt{print} 选项，模板会调整装订侧边距：
+
+\begin{lstlisting}[language=TeX]
+\documentclass[print]{wzu-thesis}
+\end{lstlisting}

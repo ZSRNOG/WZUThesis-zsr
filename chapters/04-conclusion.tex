@@ -1,0 +1,33 @@
+\chapter{常见问题和维护建议}
+
+\section{编译失败}
+
+如果编译失败，先查看 \texttt{thesis.log} 中最早出现的错误。中文论文最常见的问题包括：使用了 pdfLaTeX 而不是 XeLaTeX、BibTeX 条目括号不匹配、图片路径写错、数学环境没有闭合。
+
+推荐命令是：
+
+\begin{lstlisting}[language=bash]
+latexmk -xelatex thesis.tex
+\end{lstlisting}
+
+如果参考文献没有更新，可以运行 \texttt{latexmk -C} 清理辅助文件后重新编译。
+
+\section{如何调整格式}
+
+少量内容修改应放在正文文件中；全局格式修改应放在 \texttt{wzu-thesis.cls} 中。例如，封面坐标、页眉页脚、目录点线、图表标题、图表目录格式都属于类文件职责。
+
+若学校后续发布新版规范，优先检查以下位置：
+
+\begin{enumerate}
+  \item 页边距：类文件中的 \verb|\geometry|。
+  \item 字体：类文件中的 \verb|\AtBeginDocument| 字体设置。
+  \item 页眉页脚：类文件中的 \verb|\fancypagestyle|。
+  \item 图表标题：类文件中的 \verb|\captionsetup| 和 \verb|\wzubicaption|。
+  \item 封面字段：类文件中的 \verb|\makewzucover| 和 \texttt{front/metadata.tex}。
+\end{enumerate}
+
+\section{模板联系}
+
+联系邮箱：\href{mailto:zsrnog@yeah.net}{zsrnog@yeah.net}。
+
+建议在正式提交前，把样例章节替换为自己的论文内容，并再次对照学院或研究生院发布的最新格式要求检查封面、摘要、目录、图表目录、正文、参考文献和成果页。

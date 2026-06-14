@@ -1,0 +1,45 @@
+% !TeX program = xelatex
+% !BIB program = biber
+\documentclass[twoside]{wzu-thesis}
+% Blind review:
+% \documentclass[twoside,anonymous]{wzu-thesis}
+% Printed final copy:
+% \documentclass[print]{wzu-thesis}
+
+\input{front/metadata}
+\addbibresource{bib/references.bib}
+
+% Template contact: zsrnog@yeah.net
+% Add extra packages here when needed, for example:
+% \usepackage{mhchem}
+% \definecolor{wzublue}{RGB}{30,86,160}
+
+\begin{document}
+
+% Use the generated cover. If the graduate school requires an official PDF cover,
+% replace the next line with, for example:
+% \includewzucover[-]{cover/final-cover.pdf}
+\makewzucover
+\makewzudeclaration
+
+\frontmatter
+\input{front/abstract}
+\makewzutoc
+\makewzulistoffigures
+\makewzulistoftables
+
+\mainmatter
+\input{chapters/01-introduction}
+\input{chapters/02-method}
+\input{chapters/03-experiments}
+\input{chapters/04-conclusion}
+
+% \appendix
+% \input{back/appendix}
+
+\backmatter
+\makewzubibliography
+\input{back/acknowledgements}
+\input{back/publications}
+
+\end{document}
