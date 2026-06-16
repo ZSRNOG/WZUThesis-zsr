@@ -63,6 +63,10 @@
 
 \setCJKfamilyfont{wzucoverhei}{SimHei}[AutoFakeBold=3]
 \newcommand{\wzucoverhei}{\CJKfamily{wzucoverhei}}
+\setCJKfamilyfont{wzucoversong}{SimSun}[AutoFakeBold=2.5]
+\newcommand{\wzucoversong}{\CJKfamily{wzucoversong}}
+\setCJKfamilyfont{wzucoverkai}{KaiTi}[AutoFakeBold=2.5]
+\newcommand{\wzucoverkai}{\CJKfamily{wzucoverkai}}
 
 \geometry{
   paper=a4paper,
@@ -130,7 +134,7 @@
 }
 \lstset{style=wzu-code}
 
-\renewcommand{\contentsname}{目\quad 录}
+\renewcommand{\contentsname}{目录}
 \renewcommand{\bibname}{参考文献}
 \renewcommand{\listfigurename}{图形列表}
 \renewcommand{\listtablename}{表格列表}
@@ -150,8 +154,8 @@
 \renewcommand{\thetable}{\arabic{chapter}-\arabic{table}}
 
 \captionsetup{
-  font=small,
-  labelfont=bf,
+  font={small},
+  labelfont={bf},
   labelsep=space,
   justification=centering,
   singlelinecheck=false,
@@ -162,12 +166,12 @@
 \makeatletter
 \newcommand{\wzubicaption}[2]{%
   \ifdefstring{\@captype}{figure}{%
-    {\captionsetup{list=false}\caption{#1\\[-0.2ex]\small Figure~\thefigure\quad #2}}%
+    {\captionsetup{list=false}\caption{\kaishu\zihao{5}#1\\[-0.2ex]\rmfamily\zihao{5}Figure~\thefigure\quad #2}}%
     \addcontentsline{lof}{figure}{\protect\numberline{\thefigure}#1}%
     \addcontentsline{lof}{figure}{\protect\numberline{\thefigure}#2}%
   }{%
     \ifdefstring{\@captype}{table}{%
-      {\captionsetup{list=false}\caption{#1\\[-0.2ex]\small Table~\thetable\quad #2}}%
+      {\captionsetup{list=false}\caption{\kaishu\zihao{5}#1\\[-0.2ex]\rmfamily\zihao{5}Table~\thetable\quad #2}}%
       \addcontentsline{lot}{table}{\protect\numberline{\thetable}#1}%
       \addcontentsline{lot}{table}{\protect\numberline{\thetable}#2}%
     }{%
@@ -186,18 +190,18 @@
     titleformat = {},
     aftername = \quad,
     beforeskip = 7pt,
-    afterskip = 18pt,
+    afterskip = 24pt,
     pagestyle = wzu
   },
   section = {
-    format = \linespread{1.0}\zihao{4}\sffamily\raggedright,
+    format = \linespread{1.0}\zihao{4}\bfseries\sffamily\raggedright,
     numberformat = \rmfamily,
     aftername = \quad,
     beforeskip = 24pt,
-    afterskip = 6pt
+    afterskip = 12pt
   },
   subsection = {
-    format = \linespread{1.0}\zihao{-4}\sffamily\raggedright,
+    format = \linespread{1.0}\zihao{-4}\bfseries\sffamily\raggedright,
     numberformat = \rmfamily,
     aftername = \quad,
     beforeskip = 12pt,
@@ -261,22 +265,22 @@
 \newcommand{\wzuheadtitle}{温州大学硕士学位论文}
 \fancypagestyle{wzu}{%
   \fancyhf{}%
-  \fancyhead[C]{\footnotesize\nouppercase{\ifnumodd{\value{page}}{\leftmark}{\wzuheadtitle}}}%
-  \fancyfoot[C]{\footnotesize\thepage}%
+  \fancyhead[C]{\songti\zihao{-5}\wzuheadtitle}%
+  \fancyfoot[C]{\songti\zihao{-5}\thepage}%
   \renewcommand{\headrulewidth}{0.8pt}%
   \renewcommand{\footrulewidth}{0pt}%
 }
 \pagestyle{wzu}
 \fancypagestyle{plain}{%
   \fancyhf{}%
-  \fancyhead[C]{\footnotesize\nouppercase{\ifnumodd{\value{page}}{\leftmark}{\wzuheadtitle}}}%
-  \fancyfoot[C]{\footnotesize\thepage}%
+  \fancyhead[C]{\songti\zihao{-5}\wzuheadtitle}%
+  \fancyfoot[C]{\songti\zihao{-5}\thepage}%
   \renewcommand{\headrulewidth}{0.8pt}%
   \renewcommand{\footrulewidth}{0pt}%
 }
 \fancypagestyle{wzufront}{%
   \fancyhf{}%
-  \fancyfoot[C]{\footnotesize\thepage}%
+  \fancyfoot[C]{\songti\zihao{-5}\thepage}%
   \renewcommand{\headrulewidth}{0pt}%
   \renewcommand{\footrulewidth}{0pt}%
 }
@@ -412,9 +416,9 @@
 }
 \newcommand{\wzu@coverlinefield}[3]{%
   \pgfmathsetmacro{\wzu@yline}{#1-1.3}%
-  \node[anchor=base east,font=\songti\zihao{-4}] at (82mm,#1mm) {#2};%
+  \node[anchor=base east,font=\wzucoverkai\bfseries\zihao{-3}] at (82mm,#1mm) {#2};%
   \draw[line width=0.35pt] (87mm,\wzu@yline mm) -- (158mm,\wzu@yline mm);%
-  \node[anchor=base,font=\kaishu\zihao{4}] at (122.5mm,#1mm) {#3};%
+  \node[anchor=base,font=\wzucoverkai\bfseries\zihao{-3}] at (122.5mm,#1mm) {#3};%
 }
 \newcommand{\makewzucover}{%
   \hypersetup{pdftitle={\wzu@title},pdfauthor={\wzu@author}}%
@@ -434,7 +438,7 @@
       \node[inner sep=0pt] at (105mm,193mm) {%
         \IfFileExists{\wzu@coverlogo}{\includegraphics[width=29mm]{\wzu@coverlogo}}{}%
       };
-      \node[align=center,text width=150mm,font=\heiti\zihao{2}] at (105mm,166mm) {\wzu@title};
+      \node[align=center,text width=150mm,font=\wzucoversong\bfseries\zihao{2},execute at begin node=\setstretch{1.25}] at (105mm,168mm) {\wzu@title};
       \wzu@coverlinefield{143.5}{作\hspace{1em}者\hspace{1em}姓\hspace{1em}名：}{\wzu@maybehidden{\wzu@author}}
       \wzu@coverlinefield{132.2}{培\hspace{1em}养\hspace{1em}类\hspace{1em}型：}{\wzu@trainingtype}
       \wzu@coverlinefield{121.0}{学\hspace{1em}位\hspace{1em}类\hspace{1em}型：}{\wzu@degreetype}
@@ -493,16 +497,18 @@
   \pdfbookmark[0]{摘要}{abstract-cn}
   \markboth{摘\quad 要}{摘\quad 要}%
   \thispagestyle{wzufront}%
+  \begingroup
   \begin{center}
     {\heiti\zihao{3}\wzu@title\par}
-    \vspace{1.6em}
-    {\heiti\zihao{3}摘\quad 要\par}
+    \vspace{\baselineskip}
+    {\heiti\zihao{4}摘\quad 要\par}
   \end{center}
-  \vspace{1.6em}%
+  \vspace{\baselineskip}%
   \zihao{4}%
   \def\wzu@abstractkeywords{#1}
 }{%
-  \par\vspace{\baselineskip}\noindent{\bfseries 关键词：} \wzu@abstractkeywords
+  \par\vspace{\baselineskip}\noindent{\heiti\zihao{4}关键词：}{\songti\zihao{4}\wzu@abstractkeywords}%
+  \par\endgroup
 }
 
 \newenvironment{englishabstract}[1]{%
@@ -511,16 +517,19 @@
   \pdfbookmark[0]{Abstract}{abstract-en}
   \markboth{Abstract}{Abstract}%
   \thispagestyle{wzufront}%
+  \begingroup
   \begin{center}
-    {\sffamily\bfseries\zihao{3}\begin{minipage}{0.9\textwidth}\centering\wzu@entitle\end{minipage}\par}
-    \vspace{1.8em}
-    {\sffamily\bfseries\zihao{3}Abstract\par}
+    {\rmfamily\bfseries\zihao{3}\begin{minipage}{0.9\textwidth}\centering\MakeUppercase{\wzu@entitle}\end{minipage}\par}
+    \vspace{\baselineskip}
+    {\rmfamily\bfseries\zihao{4}ABSTRACT\par}
   \end{center}
-  \vspace{1.8em}%
+  \vspace{\baselineskip}%
   \zihao{4}%
+  \setlength{\parindent}{4em}%
   \def\wzu@abstractkeywords{#1}
 }{%
-  \par\vspace{\baselineskip}\noindent\textbf{Keywords: } \wzu@abstractkeywords
+  \par\vspace{\baselineskip}\noindent\textbf{KEY WORDS: } \wzu@abstractkeywords%
+  \par\endgroup
 }
 
 \newcommand{\makewzutoc}{%
