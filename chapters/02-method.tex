@@ -1,6 +1,6 @@
 \chapter{正文写作方法}
 
-本章展示论文正文中最常用的结构、交叉引用、公式、列表和参考文献写法。建议正文只保留内容命令，把版式命令集中放在类文件或少量自定义宏中。
+本章展示论文正文中最常用的结构、交叉引用、公式、复杂文字格式、列表和参考文献写法。建议正文只保留内容命令，把版式命令集中放在类文件或少量自定义宏中。
 
 \section{章节层级}
 
@@ -32,6 +32,8 @@
 如 \cref{fig:workflow} 所示，模板把内容与格式分离。
 \end{lstlisting}
 
+公式、图和表的标签建议分别使用 \texttt{eq:}、\texttt{fig:} 和 \texttt{tab:} 作为前缀。例如，\cref{eq:sample-loss} 展示了一个常见损失函数。
+
 \section{数学公式}
 
 行内公式可写作 \(a^2+b^2=c^2\)。独立公式建议使用 \texttt{equation} 环境并添加标签：
@@ -41,15 +43,116 @@
   \label{eq:sample-loss}
 \end{equation}
 
-正式论文中，公式前后应有必要解释，不建议连续堆叠公式。
+多行推导适合使用 \texttt{align} 环境。等号按 \verb|&| 对齐，每行用 \verb|\\| 换行：
+
+\begin{align}
+  \hat{\beta}
+  &= \arg\min_{\beta}\left\{(y-X\beta)^{\mathsf T}(y-X\beta)+\lambda\lVert\beta\rVert_2^2\right\} \notag\\
+  &= \left(X^{\mathsf T}X+\lambda I_p\right)^{-1}X^{\mathsf T}y .
+  \label{eq:ridge}
+\end{align}
+
+分段函数可以使用 \texttt{cases}。例如，Huber 损失函数可写为
+
+\begin{equation}
+  \rho_{\delta}(r)=
+  \begin{cases}
+    \dfrac{1}{2}r^2, & |r|\le \delta,\\[0.4em]
+    \delta\left(|r|-\dfrac{1}{2}\delta\right), & |r|>\delta .
+  \end{cases}
+  \label{eq:huber}
+\end{equation}
+
+矩阵、向量和转置建议使用统一记号。若正文中采用粗体表示向量和矩阵，可以写作
+
+\begin{equation}
+  \mathbf{X}=
+  \begin{bmatrix}
+    1 & x_{11} & \cdots & x_{1p}\\
+    1 & x_{21} & \cdots & x_{2p}\\
+    \vdots & \vdots & \ddots & \vdots\\
+    1 & x_{n1} & \cdots & x_{np}
+  \end{bmatrix},
+  \qquad
+  \hat{\boldsymbol{\Sigma}}=\frac{1}{n-1}\sum_{i=1}^{n}
+  (\mathbf{x}_i-\bar{\mathbf{x}})(\mathbf{x}_i-\bar{\mathbf{x}})^{\mathsf T}.
+  \label{eq:matrix}
+\end{equation}
+
+复杂优化问题可以把约束条件放在 \texttt{aligned} 子环境中：
+
+\begin{equation}
+  \begin{aligned}
+    \min_{\mathbf{w},\,b,\,\boldsymbol{\xi}}\quad
+    & \frac{1}{2}\lVert\mathbf{w}\rVert_2^2+C\sum_{i=1}^{n}\xi_i\\
+    \text{s.t.}\quad
+    & y_i(\mathbf{w}^{\mathsf T}\mathbf{x}_i+b)\ge 1-\xi_i,\quad i=1,\ldots,n,\\
+    & \xi_i\ge 0,\quad i=1,\ldots,n .
+  \end{aligned}
+  \label{eq:svm}
+\end{equation}
+
+模板已经定义了定理类环境，适合写定义、定理和证明：
+
+\begin{definition}[一致估计]
+若估计量序列 \(\hat{\theta}_n\) 满足对任意 \(\varepsilon>0\)，有
+\(\lim_{n\to\infty}\Pr(|\hat{\theta}_n-\theta|>\varepsilon)=0\)，则称 \(\hat{\theta}_n\) 是参数 \(\theta\) 的一致估计。
+\end{definition}
+
+\begin{theorem}[样本均值的一致性]
+设 \(X_1,\ldots,X_n\) 独立同分布，且 \(\mathbb{E}X_i=\mu\)、\(\operatorname{Var}(X_i)=\sigma^2<\infty\)，则样本均值 \(\bar{X}_n\) 是 \(\mu\) 的一致估计。
+\end{theorem}
+
+\begin{proof}
+由切比雪夫不等式可得
+\[
+  \Pr(|\bar{X}_n-\mu|>\varepsilon)
+  \le \frac{\operatorname{Var}(\bar{X}_n)}{\varepsilon^2}
+  = \frac{\sigma^2}{n\varepsilon^2}.
+\]
+当 \(n\to\infty\) 时，右端趋于 0，因此结论成立。
+\end{proof}
+
+正式论文中，公式前后应有必要解释，不建议连续堆叠公式。较长公式如果超出版心，可以优先拆成多行，而不是缩小字号。
+
+\section{复杂文字格式}
+
+正文强调少量关键词时，可以使用 \textbf{黑体强调} 或 \emph{西文斜体强调}。中文论文中不建议大段使用加粗、下划线或彩色文字，除非它们有明确的学术含义。
+
+脚注适合放不影响主线阅读的补充说明\footnote{脚注不宜过长；如果内容很重要，通常应写入正文。}。短引文可直接放在正文中，较长说明可以使用 \texttt{quote} 环境：
+
+\begin{quote}
+模板示例中的文字格式只用于说明命令写法。正式论文应保持同一级标题、正文、图题、表题和脚注的格式一致。
+\end{quote}
+
+当需要列出概念与说明时，可以使用 \texttt{description}：
+
+\begin{description}
+  \item[研究对象] 明确论文分析的主体、范围和时间区间。
+  \item[研究方法] 说明模型、算法、数据来源和评价指标。
+  \item[研究结论] 对主要发现进行归纳，并避免超出数据支持范围的判断。
+\end{description}
+
+代码、命令和文件名可以用等宽字体表示，例如 \texttt{thesis.tex}、\texttt{front/metadata.tex} 和 \verb|latexmk -xelatex thesis.tex|。较长代码建议使用 \texttt{lstlisting}：
+
+\begin{lstlisting}[language=TeX]
+\textbf{中文加粗}
+\emph{English emphasis}
+\footnote{这里写脚注内容。}
+\end{lstlisting}
+
+带单位的数字建议使用 \verb|\SI|，例如 \SI{95}{\percent} 置信区间、\SI{30}{\minute} 计算时间和 \SI{1.5}{\giga\byte} 数据文件。这样可以保持数字与单位之间的空距一致。
 
 \section{参考文献}
 
-参考文献条目写在 \texttt{bib/references.bib} 中，正文用 \verb|\cite| 引用。例如，本模板参考了 \LaTeX{} 的基本写作思想\cite{lamport1986latex}，参考文献格式采用 GB/T 7714 风格\cite{gbt7714-2015}。模板通过 \texttt{biblatex-gb7714-2015} 自动处理顺序编码、作者名、出版项和标点，日常写作只需要维护 BibTeX 条目。
+参考文献条目写在 \texttt{bib/references.bib} 中，正文用 \verb|\cite| 引用。例如，本模板参考了 \LaTeX{} 的基本写作思想\cite{lamport1986latex}，参考文献格式采用 GB/T 7714 风格\cite{gbt7714-2015}。统计模型类论文中常见的文献包括期刊论文\cite{wang2026robust}、会议论文\cite{he2016resnet}、学位论文\cite{li2024thesis}、在线资料\cite{ctan2026biblatex} 和专利\cite{sample-patent}。
+
+模板通过 \texttt{biblatex-gb7714-2015} 自动处理顺序编码、作者名、出版项和标点，日常写作只需要维护 BibTeX 条目。
 
 \begin{lstlisting}[language=TeX]
 参考文献可这样引用：\cite{lamport1986latex}
 多篇文献可这样引用：\cite{lamport1986latex,gbt7714-2015}
+需要把作者放进正文时，可写：Lamport\cite{lamport1986latex} 提出了...
 \end{lstlisting}
 
 常见国标参考文献条目写法如下：
@@ -65,12 +168,27 @@
   pages   = {1-12}
 }
 
-@standard{gbt7714-2015,
-  title       = {信息与文献 参考文献著录规则},
-  number      = {GB/T 7714--2015},
-  institution = {中国国家标准化管理委员会},
-  address     = {北京},
-  year        = {2015}
+@inproceedings{demo-conf,
+  author    = {He, Kaiming and Zhang, Xiangyu},
+  title     = {Deep Residual Learning for Image Recognition},
+  booktitle = {Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition},
+  year      = {2016},
+  pages     = {770-778}
+}
+
+@mastersthesis{demo-thesis,
+  author  = {李明},
+  title   = {复杂抽样下居民消费结构统计建模研究},
+  school  = {温州大学},
+  address = {温州},
+  year    = {2024}
+}
+
+@online{demo-online,
+  author  = {{CTAN Team}},
+  title   = {The biblatex Package},
+  url     = {https://ctan.org/pkg/biblatex},
+  urldate = {2026-06-16}
 }
 \end{lstlisting}
 
@@ -83,3 +201,11 @@
   \item 再修改 \texttt{front/abstract.tex} 中的摘要。
   \item 最后在 \texttt{chapters/} 中撰写正文。
 \end{enumerate}
+
+无序列表适合放并列说明：
+
+\begin{itemize}
+  \item 图题和表题由模板自动居中；
+  \item 图形列表和表格列表由 \verb|\makewzulists| 生成；
+  \item 参考文献由 \verb|\printbibliography| 输出。
+\end{itemize}
