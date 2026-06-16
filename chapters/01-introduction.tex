@@ -1,7 +1,8 @@
 \chapter{模板快速开始}
 
 本章说明如何使用本模板完成一篇温州大学硕士学位论文。模板联系邮箱为
-\href{mailto:zsrnog@yeah.net}{zsrnog@yeah.net}。模板的目标是把封面、声明页、摘要、目录、图表目录、正文、参考文献和后置材料拆分到固定位置，让日常写作尽量只修改内容文件。
+\href{mailto:zsrnog@yeah.net}{zsrnog@yeah.net}。模板 GitHub 仓库为
+\url{https://github.com/ZSRNOG/WZUThesis-zsr}。模板的目标是把封面、声明页、摘要、目录、图表目录、正文、参考文献和后置材料拆分到固定位置，让日常写作尽量只修改内容文件。
 
 \section{文件结构}
 
@@ -31,7 +32,7 @@
 }
 \end{lstlisting}
 
-其中 \texttt{title} 会同时用于封面和中文摘要页，\texttt{title*} 会用于英文摘要页。封面格式本身由 \verb|\makewzucover| 生成，日常写作不建议直接修改类文件中的封面坐标。
+其中 \texttt{title} 会同时用于封面和中文摘要页，\texttt{title*} 会用于英文摘要页。封面格式本身由 \verb|\makewzucover| 生成，日常写作不建议直接修改类文件中的封面坐标。如果封面中信息栏需要整体下移，可以在 \verb|\wzusetup| 中加入 \texttt{cover-info-shift = \{4\}}，数字单位为毫米；正数向下移，负数向上移。
 
 \section{编译方式}
 
