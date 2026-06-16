@@ -232,7 +232,7 @@
     \leavevmode
     \@tempdima #3\relax
     \advance\leftskip \@tempdima \null\nobreak\hskip -\leftskip
-    {#4}\nobreak
+    {\heiti\zihao{-4} #4}\nobreak
     \leaders\hbox{$\m@th\mkern \@dotsep \cdot\mkern \@dotsep$}\hfill
     \nobreak
     \hb@xt@\@pnumwidth{\hfil\normalfont\normalcolor\zihao{-4} #5}%
@@ -247,7 +247,7 @@
     \begingroup
       \parindent \z@ \rightskip \@pnumwidth
       \parfillskip -\@pnumwidth
-      \leavevmode \zihao{4}\sffamily
+      \leavevmode\heiti\zihao{4}\sffamily
       \advance\leftskip\@tempdima
       \hskip -\leftskip
       #1\nobreak
@@ -394,6 +394,7 @@
 \define@key{wzu}{institute*}{\def\wzu@eninstitute{#1}}
 \define@key{wzu}{completion-date}{\def\wzu@completiondate{#1}}
 \define@key{wzu}{completion-date*}{\def\wzu@encompletiondate{#1}}
+\define@key{wzu}{cover-info-shift}{\def\wzu@coverinfoshift{#1}}
 \newcommand{\wzusetup}[1]{\kvsetkeys{wzu}{#1}}
 
 \newcommand{\wzu@maybehidden}[1]{\ifwzu@anonymous\relax\else #1\fi}
@@ -407,6 +408,7 @@
 
 \def\wzu@coverlogo{figures/wzu-logo.jpg}
 \def\wzu@covertitleimage{figures/wzu-title.png}
+\def\wzu@coverinfoshift{0}
 \newcommand{\wzu@covertopfield}[6]{%
   \pgfmathsetmacro{\wzu@yline}{#4-1.2}%
   \pgfmathsetmacro{\wzu@xmid}{(#2+#3)/2}%
@@ -415,10 +417,11 @@
   \node[anchor=base,font=\songti\zihao{-4}] at (\wzu@xmid mm,#4mm) {#6};%
 }
 \newcommand{\wzu@coverlinefield}[3]{%
-  \pgfmathsetmacro{\wzu@yline}{#1-1.3}%
-  \node[anchor=base east,font=\wzucoverkai\bfseries\zihao{-3}] at (82mm,#1mm) {#2};%
+  \pgfmathsetmacro{\wzu@fieldy}{#1-\wzu@coverinfoshift}%
+  \pgfmathsetmacro{\wzu@yline}{\wzu@fieldy-1.3}%
+  \node[anchor=base east,font=\songti\zihao{-3}] at (82mm,\wzu@fieldy mm) {#2};%
   \draw[line width=0.35pt] (87mm,\wzu@yline mm) -- (158mm,\wzu@yline mm);%
-  \node[anchor=base,font=\wzucoverkai\bfseries\zihao{-3}] at (122.5mm,#1mm) {#3};%
+  \node[anchor=base,font=\wzucoverkai\bfseries\zihao{-3}] at (122.5mm,\wzu@fieldy mm) {#3};%
 }
 \newcommand{\makewzucover}{%
   \hypersetup{pdftitle={\wzu@title},pdfauthor={\wzu@author}}%
@@ -438,15 +441,16 @@
       \node[inner sep=0pt] at (105mm,193mm) {%
         \IfFileExists{\wzu@coverlogo}{\includegraphics[width=29mm]{\wzu@coverlogo}}{}%
       };
-      \node[align=center,text width=150mm,font=\wzucoversong\bfseries\zihao{2},execute at begin node=\setstretch{1.25}] at (105mm,168mm) {\wzu@title};
-      \wzu@coverlinefield{143.5}{作\hspace{1em}者\hspace{1em}姓\hspace{1em}名：}{\wzu@maybehidden{\wzu@author}}
-      \wzu@coverlinefield{132.2}{培\hspace{1em}养\hspace{1em}类\hspace{1em}型：}{\wzu@trainingtype}
-      \wzu@coverlinefield{121.0}{学\hspace{1em}位\hspace{1em}类\hspace{1em}型：}{\wzu@degreetype}
-      \wzu@coverlinefield{109.8}{专\hspace{1em}业\hspace{1em}名\hspace{1em}称：}{\wzu@major}
-      \wzu@coverlinefield{98.6}{研\hspace{1em}究\hspace{1em}方\hspace{1em}向：}{\wzu@researchfield}
-      \wzu@coverlinefield{87.4}{指\hspace{1em}导\hspace{1em}教\hspace{1em}师：}{\wzu@maybehidden{\wzu@advisor}}
-      \wzu@coverlinefield{76.2}{完\hspace{1em}成\hspace{1em}日\hspace{1em}期：}{\wzu@completiondate}
-      \node[font=\songti\zihao{-3}] at (105mm,63mm) {\wzu@committee};
+      \node[align=center,text width=170mm,font=\wzucoversong\bfseries,execute at begin node=\setstretch{2.25}] at (105mm,160mm) {{\zihao{2}\selectfont\wzu@title}};
+      \wzu@coverlinefield{133.5}{作\hspace{1em}者\hspace{1em}姓\hspace{1em}名：}{\wzu@maybehidden{\wzu@author}}
+      \wzu@coverlinefield{122.2}{培\hspace{1em}养\hspace{1em}类\hspace{1em}型：}{\wzu@trainingtype}
+      \wzu@coverlinefield{111.0}{学\hspace{1em}位\hspace{1em}类\hspace{1em}型：}{\wzu@degreetype}
+      \wzu@coverlinefield{99.8}{专\hspace{1em}业\hspace{1em}名\hspace{1em}称：}{\wzu@major}
+      \wzu@coverlinefield{88.6}{研\hspace{1em}究\hspace{1em}方\hspace{1em}向：}{\wzu@researchfield}
+      \wzu@coverlinefield{77.4}{指\hspace{1em}导\hspace{1em}教\hspace{1em}师：}{\wzu@maybehidden{\wzu@advisor}}
+      \wzu@coverlinefield{66.2}{完\hspace{1em}成\hspace{1em}日\hspace{1em}期：}{\wzu@completiondate}
+      \pgfmathsetmacro{\wzu@committeey}{43.5-\wzu@coverinfoshift}%
+      \node[font=\songti\zihao{-3}] at (105mm,\wzu@committeey mm) {\wzu@committee};
     \end{scope}
   \end{tikzpicture}%
   \cleardoublepage[empty]
@@ -461,10 +465,10 @@
     \zihao{5}\setstretch{1.95}
     \vspace*{0mm}
     \begin{center}
-      {\wzucoverhei\bfseries 温~~州~~大~~学~~学~~位~~论~~文~~独~~创~~性~~声~~明}
+      {\wzucoverhei\bfseries\fontsize{10pt}{12pt}\selectfont 温~~州~~大~~学~~学~~位~~论~~文~~独~~创~~性~~声~~明}
     \end{center}
     \vspace{12mm}
-    {\zihao{5}
+    {\songti\fontsize{11pt}{19.5pt}\selectfont
     ~~~~~~~本人郑重声明：所呈交的学位论文是我个人在导师指导下进行的研究工作及取得的研究成果。尽我所知，除了文中特别加以标注和致谢的地方外，论文中不包含其他人已经发表或撰写过的研究成果，也不包含为获得温州大学或其它教育机构的学位或证书而使用过的材料。与我一同工作的同志对本研究所做的任何贡献均已在论文中作了明确的说明并表示了谢意。}
     
     \vspace{18mm}
@@ -472,11 +476,11 @@
 
     \vspace{13mm}
     \begin{center}
-      {\wzucoverhei\bfseries 温 ~~州~~大~~学~~学~~位~~论~~文~~使~~用~~授~~权~~声~~明}
+      {\wzucoverhei\bfseries\fontsize{10pt}{12pt}\selectfont 温~~州~~大~~学~~学~~位~~论~~文~~使~~用~~授~~权~~声~~明}
     \end{center}
     \vspace{12mm}
-    {\zihao{5}
-    ~~~~~~~~本人完全了解温州大学关于收集、保存、使用学位论文的规定，即：学校有权保留并向国家有关部门或机构送交论文的复印件和电子版，允许论文被查阅和借阅。本人授权温州大学可以将本学位论文的全部或部分内容编入有关数据库进行检索，可以采用影印、缩印或扫描等复制手段保存和汇编本学位论文。本人在导师指导下完成的论文成果，知识产权归属温州大学。
+    {\songti\fontsize{11pt}{15.5pt}\selectfont
+    ~~~~~~~本人完全了解温州大学关于收集、保存、使用学位论文的规定，即：学校有权保留并向国家有关部门或机构送交论文的复印件和电子版，允许论文被查阅和借阅。本人授权温州大学可以将本学位论文的全部或部分内容编入有关数据库进行检索，可以采用影印、缩印或扫描等复制手段保存和汇编本学位论文。本人在导师指导下完成的论文成果，知识产权归属温州大学。
 
     保密论文在解密后遵守此规定。
 }
@@ -484,7 +488,7 @@
     \vspace{9mm}
     {\zihao{5}论文作者签名：\hspace{60mm} 导师签名：}
 
-    \vspace{5mm}
+    \vspace{0mm}
     {\zihao{5}日期：\makebox[3em][c]{}年\makebox[2em][c]{}月\makebox[2em][c]{}日\hspace{38mm} 日期：\makebox[3em][c]{}年\makebox[2em][c]{}月\makebox[2em][c]{}日}
     \par\endgroup
     \cleardoublepage[empty]
@@ -494,7 +498,7 @@
 \newenvironment{chineseabstract}[1]{%
   \clearpage
   \phantomsection
-  \pdfbookmark[0]{摘要}{abstract-cn}
+  \addcontentsline{toc}{chapter}{摘要}
   \markboth{摘\quad 要}{摘\quad 要}%
   \thispagestyle{wzufront}%
   \begingroup
@@ -505,6 +509,7 @@
   \end{center}
   \vspace{\baselineskip}%
   \zihao{4}%
+  \setlength{\parindent}{2em}%
   \def\wzu@abstractkeywords{#1}
 }{%
   \par\vspace{\baselineskip}\noindent{\heiti\zihao{4}关键词：}{\songti\zihao{4}\wzu@abstractkeywords}%
@@ -514,18 +519,18 @@
 \newenvironment{englishabstract}[1]{%
   \cleardoublepage[wzufront]%
   \phantomsection
-  \pdfbookmark[0]{Abstract}{abstract-en}
+  \addcontentsline{toc}{chapter}{Abstract}
   \markboth{Abstract}{Abstract}%
   \thispagestyle{wzufront}%
   \begingroup
   \begin{center}
-    {\rmfamily\bfseries\zihao{3}\begin{minipage}{0.9\textwidth}\centering\MakeUppercase{\wzu@entitle}\end{minipage}\par}
+    {\rmfamily\bfseries\zihao{3}\begin{minipage}{0.9\textwidth}\centering\wzu@entitle\end{minipage}\par}
     \vspace{\baselineskip}
     {\rmfamily\bfseries\zihao{4}ABSTRACT\par}
   \end{center}
   \vspace{\baselineskip}%
   \zihao{4}%
-  \setlength{\parindent}{4em}%
+  \setlength{\parindent}{0.3in}%
   \def\wzu@abstractkeywords{#1}
 }{%
   \par\vspace{\baselineskip}\noindent\textbf{KEY WORDS: } \wzu@abstractkeywords%
