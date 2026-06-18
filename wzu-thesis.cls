@@ -265,7 +265,8 @@
 \newcommand{\wzuheadtitle}{温州大学硕士学位论文}
 \fancypagestyle{wzu}{%
   \fancyhf{}%
-  \fancyhead[C]{\songti\zihao{-5}\wzuheadtitle}%
+  \fancyhead[CE]{\songti\zihao{-5}\wzuheadtitle}%
+  \fancyhead[CO]{\songti\zihao{-5}\nouppercase{\leftmark}}%
   \fancyfoot[C]{\songti\zihao{-5}\thepage}%
   \renewcommand{\headrulewidth}{0.8pt}%
   \renewcommand{\footrulewidth}{0pt}%
@@ -273,7 +274,8 @@
 \pagestyle{wzu}
 \fancypagestyle{plain}{%
   \fancyhf{}%
-  \fancyhead[C]{\songti\zihao{-5}\wzuheadtitle}%
+  \fancyhead[CE]{\songti\zihao{-5}\wzuheadtitle}%
+  \fancyhead[CO]{\songti\zihao{-5}\nouppercase{\leftmark}}%
   \fancyfoot[C]{\songti\zihao{-5}\thepage}%
   \renewcommand{\headrulewidth}{0.8pt}%
   \renewcommand{\footrulewidth}{0pt}%
@@ -519,7 +521,7 @@
 \newenvironment{englishabstract}[1]{%
   \cleardoublepage[wzufront]%
   \phantomsection
-  \addcontentsline{toc}{chapter}{Abstract}
+  \addcontentsline{toc}{chapter}{ABSTRACT}
   \markboth{Abstract}{Abstract}%
   \thispagestyle{wzufront}%
   \begingroup
